@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.websocket.server.PathParam;
 
 @Controller
-@ResponseBody
 public class HelloController {
 
 
@@ -18,6 +17,7 @@ public class HelloController {
 
     ///////lives at /hello/goodbye
     @GetMapping("goodbye")
+    @ResponseBody
     public String goodBoy(){
         return "Goodbye, Spring!";
     }
@@ -32,6 +32,7 @@ public class HelloController {
 //    }
 
     @RequestMapping( value = "hello", method = RequestMethod.POST)
+    @ResponseBody
     public String helloPost(@RequestParam String name, @RequestParam String language) {
         if (name == null) {
             name = "World";
@@ -58,7 +59,7 @@ public class HelloController {
             greeting = "Ni Hau";
         }
 
-        return greeting + " " + n;
+        return greeting + " " + n + " !";
     }
 
     ////////handles requests of the form  at /hello/LaunchCode
@@ -70,21 +71,7 @@ public class HelloController {
     //lives in hello/form
     @GetMapping("form")
     public String helloForm(){
-        return "<html>" +
-                "<body>" +
-                "<form action='hello' method='post'>" + //submit a request to /hello
-                "<input type='text' name='name'>" +
-                "<select name='language'>" +
-                "<option value='english' selected> English </option>" +
-                "<option value='french'> French </option>" +
-                "<option value='cantonese'> Cantonese </option>"  +
-                "<option value='spanish'> Spanish </option>"  +
-                "<option value='mandarin'> Mandarin </option>" +
-                "</select>"  +
-                "<input type='submit' value='Greeting!'>"+
-                "</form>" +
-                "</body>" +
-                "</html>" ;
+        return "form";
     }
 
 
