@@ -1,9 +1,12 @@
 package org.launchcode.hellospring.Controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class HelloController {
@@ -22,14 +25,15 @@ public class HelloController {
         return "Goodbye, Spring!";
     }
 
-//    @GetMapping("hello")
-    //////live in /hello/hello
-    ///////handles request of the form  at /hello?name=LaunchCode
+    ////live in /hello/hello
+    /////handles request of the form  at /hello?name=LaunchCode
 
-//    @RequestMapping(method= { RequestMethod.GET, RequestMethod.POST})
-//    public String helloWithQueryParam(@RequestParam String name){
-//        return "Hello, " + name + "!";
-//    }
+    @RequestMapping(value = "hello", method= { RequestMethod.GET, RequestMethod.POST})
+    public String helloWithQueryParam(@RequestParam String name, Model model){
+        String theGreeting = "Hello, " + name + "!";
+        model.addAttribute("greeting", theGreeting);
+        return "hello";
+    }
 
     @RequestMapping( value = "hello", method = RequestMethod.POST)
     @ResponseBody
@@ -63,10 +67,11 @@ public class HelloController {
     }
 
     ////////handles requests of the form  at /hello/LaunchCode
-//    @GetMapping("hello/{name}")
-//    public String helloWithPathParam(@PathVariable String name){
-//        return "Hello, " + name + "!";
-//    }
+    @GetMapping("hello/{name}")
+    public String helloWithPathParam(@PathVariable String name, Model model){
+        model.addAttribute("greeting", "Hello, " + name + "!");
+        return "hello";
+    }
 
     //lives in hello/form
     @GetMapping("form")
@@ -75,5 +80,14 @@ public class HelloController {
     }
 
 
+    @GetMapping("hello-names")
+    public String helloNames(Model model){
+        List<String> names = new ArrayList<>();
+        names.add("Java");
+        names.add("React");
+        names.add("C+");
+        model.addAttribute("names", names);
+        return "hello-list";
+    }
 
 }
